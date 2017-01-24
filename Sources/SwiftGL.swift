@@ -147,10 +147,10 @@ func getAddress(_ info: CommandInfo) -> UnsafeMutableRawPointer! {
 
     import Glibc
 
-    var dlopenHandle = UnsafeMutablePointer<Void>()
+    var dlopenHandle = UnsafeMutableRawPointer! = nil
     var glXGetProcAddress:(@convention(c) (UnsafePointer<GLchar>) -> UnsafeMutablePointer<Void>)? = nil
     
-    func lookupAddress(info: CommandInfo) -> UnsafeMutablePointer<Void> {
+    func lookupAddress(info: CommandInfo) -> UnsafeMutableRawPointer! {
         if dlopenHandle == nil {
             dlopenHandle = dlopen(nil, RTLD_LAZY | RTLD_LOCAL)
         }
@@ -177,7 +177,7 @@ func getAddress(_ info: CommandInfo) -> UnsafeMutableRawPointer! {
     
 #else
 
-    func lookupAddress(info: commandInfo) -> UnsafeMutablePointer<Void> {
+    func lookupAddress(info: commandInfo) -> UnsafeMutableRawPointer! {
         fatalError("Unsupported OS")
     }
 
